@@ -102,7 +102,7 @@ exports.authUser = (req, res) => {
       message: "Body must not be empty!"
     });
   }
-  User.checkPassword(req.params.userID, req.body.userID, (err, data) => {
+  User.checkPassword(req.body.email, req.body.password, (err, data) => {
     if (err) {
       res.status(500).send({
         message: err,
@@ -111,9 +111,12 @@ exports.authUser = (req, res) => {
       if (data) {
         res.send({
           authenticated: true,
+          user: data,
         });
       } else {
-
+        res.status(401).send({
+          message: 'Incorrect password.'
+        });
       }
     }
   });

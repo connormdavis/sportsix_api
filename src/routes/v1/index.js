@@ -60,5 +60,10 @@ router.delete('/users/positions/:userID', users.removePosition);
 */
 router.get('/users/sports/:userID', instructors.getSports);
 
+/*
+  'auth' routes
+*/
+router.post('/signin', users.authUser);
+
 
 export default router;
