@@ -16,8 +16,8 @@ Instructor.create = (newInstructor, result) => {
       result(err, null);
       return;
     }
-    console.log("created instructor: ", { id: res.insertId, ...newUser });
-    result(null, { id: res.insertID, ...newUser });
+    console.log("created instructor: ", { id: res.insertId, ...newInstructor });
+    result(null, { id: res.insertID, ...newInstructor });
   });
 };
 

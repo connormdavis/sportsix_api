@@ -51,6 +51,30 @@ User.findById = (userID, result) => {
   });
 };
 
+User.findIdByEmail = (email, result) => {
+  sql.query("SELECT UserID FROM Users WHERE Email = ?", [email], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+    } else {
+      // return no error and found id in 'res' var
+      result(null, res[0]);
+    }
+  });
+};
+
+User.findByEmail = (email, result) => {
+  sql.query("SELECT * FROM Users WHERE Email = ?", [email], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+    } else {
+      // return no error and user obj in 'res' var
+      result(null, res[0]);
+    }
+  });
+};
+
 User.getAll = (result) => {
   // find all users
 };
@@ -91,34 +115,32 @@ User.getSports = (userID, result) => {
   Major 'User Authentication' methods
 */
 
-User.checkPassword = (userID, plainPassword, result) => {
-
-  User.findById(userID, (err, user) => {
+User.checkPassword = (email, plainPassword, result) => {
+  // look for user 
+  User.findByEmail(email, (err, user) => {
     if (err) {
       console.log('error: ', err);
       result(err, null);
     }
     if (user) {
       bcrypt.compare(plainPassword, user.Password, function (err, res) {
+        console.log(`compare results: ${res}`);
         if (err) {
           console.log('error: ', err);
           result(err, null);
         } else {
-          // if passwords match, return true
+          // if passwords match, return user object
           if (res) {
-            result(null, true);
+            result(null, user);
           } else {
-            result(null, false);
+            result(null, null);
           }
         }
       });
-      result(null, user);
     } else {
-      result(null, false);
+      result(null, null);
     }
   });
-
-
 };
 
 export default User;
