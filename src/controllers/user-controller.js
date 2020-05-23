@@ -3,10 +3,6 @@ import geo from '../models/geocodio';
 
 // Create and save a new User
 exports.create = (req, res) => {
-  res.status(400).send({
-    message: "so many errors maph is so incredibly gay it broke my shit"
-  });
-  return;
 
   // Validate request
   if (!req.body) {
