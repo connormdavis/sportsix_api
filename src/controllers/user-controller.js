@@ -1,7 +1,13 @@
 import User from '../models/user-model';
+import geo from '../models/geocodio';
 
 // Create and save a new User
 exports.create = (req, res) => {
+  res.status(400).send({
+    message: "so many errors maph is so incredibly gay it broke my shit"
+  });
+  return;
+
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -9,22 +15,42 @@ exports.create = (req, res) => {
     });
   }
 
-  // Create a User
-  const user = new User({
-    email: req.body.email,
-    password: req.body.password
+  geo.addressToLatLon(req.body.address, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+    }
+    // extract values
+    const lat = res.lat || null;
+    const lon = res.lon || null;
+
+    // Create a User
+    const user = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      phone: req.body.phone,
+      address: req.body.address,
+      city: req.body.city,
+      state: req.body.state,
+      zip: req.body.zip,
+      lat: lat,
+      lon: lon,
+    });
+
+    // Save User in the database
+    User.create(user, (err, data) => {
+      if (err) {
+        res.status(500).send({
+          message: err.message || "Some error occurred while creating the User."
+        });
+      } else {
+        res.send(data);
+      }
+    });
+
   });
 
-  // Save User in the database
-  User.create(user, (err, data) => {
-    if (err) {
-      res.status(500).send({
-        message: err.message || "Some error occurred while creating the User."
-      });
-    } else {
-      res.send(data);
-    }
-  });
 };
 
 // Retrieve all Users from the database.

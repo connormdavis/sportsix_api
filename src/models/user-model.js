@@ -1,9 +1,19 @@
 import sql from './db';
 import bcrypt from 'bcryptjs';
+import geo from './geocodio';
 
 const User = function (user) {
+  this.firstName = user.firstName;
+  this.lastName = user.lastName;
   this.email = user.email;
   this.password = user.password;
+  this.phone = user.phone;
+  this.address = user.address;
+  this.city = user.city;
+  this.state = user.state;
+  this.zip = user.zip;
+  this.lat = user.lat;
+  this.lon = user.lon;
 };
 
 /*
@@ -19,8 +29,9 @@ User.create = (newUser, result) => {
         result(err, null);
         return;
       }
+
       // Store hash in your password DB.
-      sql.query("INSERT INTO Users (Email, Password) VALUES (?, ?)", [newUser.email, hash], (err, res) => {
+      sql.query("INSERT INTO Users (FirstName, LastName, Email, Password, Phone, Address, City, State, Zip, Lat, Lon, c_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())", [newUser.firstName, newUser.lastName, newUser.email, hash, newUser.phone, newUser.address, newUser.city, newUser.state, newUser.zip, newUser.lat, newUser.lon], (err, res) => {
         if (err) {
           console.log("error: ", err);
           result(err, null);
