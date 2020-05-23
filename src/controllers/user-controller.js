@@ -17,7 +17,7 @@ exports.create = (req, res) => {
     }
     // extract values
     const lat = res.lat || null;
-    const lon = res.lon || null;
+    const lon = res.lng || null;
 
     // Create a User
     const user = new User({
