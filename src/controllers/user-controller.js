@@ -11,13 +11,13 @@ exports.create = (req, res) => {
     });
   }
 
-  geo.addressToLatLon(req.body.address, (err, res) => {
+  geo.addressToLatLon(req.body.address, (err, location) => {
     if (err) {
       console.log('error: ', err);
     }
     // extract values
-    const lat = res.lat || null;
-    const lon = res.lng || null;
+    const lat = location.lat || null;
+    const lon = location.lng || null;
 
     // Create a User
     const user = new User({
