@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "license": "ISC",
   "scripts": {
-    "start": "nodemon --exec babel-node src/server.js",
+    "start": "nodemon --exec babel-node -r dotenv/config src/server.js",
     "build": "babel src -d dist",
     "prod": "yarn build; node dist/server.js"
   },
@@ -12,7 +12,9 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "~1.0.1",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "~4.0.0",
+    "geocodio-library-node": "^1.2.1",
     "mongoose": "~3.6.13",
     "mysql": "^2.18.1"
   },

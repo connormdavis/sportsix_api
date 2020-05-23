@@ -1,9 +1,12 @@
 var express = require('express');        // call express
 var app = express();                 // define our app using express
+import dotenv from 'dotenv';
+dotenv.config();
 var bodyParser = require('body-parser');
 import morgan from 'morgan';
 import cors from 'cors';
 import v1Routes from './routes/v1';
+
 
 // set up parsing body of requests
 app.use(bodyParser.urlencoded({ extended: true }));
