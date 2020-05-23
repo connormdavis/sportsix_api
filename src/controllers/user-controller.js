@@ -37,9 +37,15 @@ exports.create = (req, res) => {
     // Save User in the database
     User.create(user, (err, data) => {
       if (err) {
-        res.status(500).send({
-          message: err.message || "Some error occurred while creating the User."
-        });
+        if (err.errno === 1062) {
+          res.status(500).send({
+            message: "Email already exists. Please sign in."
+          });
+        } else {
+          res.status(500).send({
+            message: err.message || "Some error occurred while creating the User."
+          });
+        }
       } else {
         res.send(data);
       }
