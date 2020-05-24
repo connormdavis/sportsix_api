@@ -55,9 +55,25 @@ exports.create = (req, res) => {
 
 };
 
-// Retrieve all Users from the database.
+// TODO: Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-
+  User.getAll((err, data) => {
+    if (err) {
+      res.status(500).send({
+        message: err.message || "Some error occurred while attempting to retrieve all users."
+      });
+    }
+    else {
+      if (data) {
+        res.send(data[0]);
+      }
+      else {
+        res.status(500).send({
+          message: "No users exist"
+        });
+      }
+    }
+  });
 };
 
 // Find a single User with a userID
@@ -80,17 +96,17 @@ exports.findOne = (req, res) => {
   });
 };
 
-// Update a User identified by the userID in the request
+// TODO: Update a User identified by the userID in the request
 exports.update = (req, res) => {
   // use the id passed as query paramater & use body for user fields
 };
 
-// Delete a User with the specified userID in the request
+// TODO: Delete a User with the specified userID in the request
 exports.delete = (req, res) => {
   // use the id passed as query paramater
 };
 
-// Delete all Users from the database.
+// TODO: Delete all Users from the database.
 exports.deleteAll = (req, res) => {
 
 };
@@ -99,22 +115,22 @@ exports.deleteAll = (req, res) => {
   'Plays' methods
 */
 
-// Add new position (from given positionID) for user with given userID
+// TODO: Add new position (from given positionID) for user with given userID
 exports.addPosition = (req, res) => {
 
 };
 
-// Remove position (from given positionID) for user with given userID
+// TODO: Remove position (from given positionID) for user with given userID
 exports.removePosition = (req, res) => {
 
 };
 
-// Get all positions that a user plays
+// TODO: Get all positions that a user plays
 exports.getPositions = (req, res) => {
 
 };
 
-// Get all sports that a user plays based on the positions they play
+// TODO: Get all sports that a user plays based on the positions they play
 exports.getSports = (req, res) => {
 
 };

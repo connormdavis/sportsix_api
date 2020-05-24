@@ -86,40 +86,56 @@ User.findByEmail = (email, result) => {
   });
 };
 
+// TODO: find all users
 User.getAll = (result) => {
-  // find all users
+  sql.query("SELECT * FROM Users", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+    } else {
+      // return no error and user obj in 'res' var
+      result(null, res[0]);
+    }
+  });
 };
 
+// TODO: update user with new fields by id
 User.updateById = (id, user, result) => {
-  // update user with new fields by id
+  
 };
 
+// TODO: delete user w/ given id
 User.removeById = (id, result) => {
-  // delete user w/ given id
+  
 };
 
+// TODO: delete all users
 User.removeAll = (result) => {
-  // delete all users
+  
 };
 
 /*
   'Plays' methods
 */
 
+// TODO: add position by given positionID to given user with userID
 User.addPosition = (userID, positionID, result) => {
-  // add position by given positionID to given user with userID
+  
 };
 
+// TODO: remove position by given positionID to given user with userID
 User.removePosition = (userID, positionID, result) => {
-  // remove position by given positionID to given user with userID
+  
 };
 
+// TODO: get positions played by user with given userID
 User.getPositions = (userID, result) => {
-  // get positions played by user with given userID
+  
 };
 
+// TODO: get all sports played by user with given userID by checking all played positions
 User.getSports = (userID, result) => {
-  // get all sports played by user with given userID by checking all played positions
+  
 };
 
 /*
