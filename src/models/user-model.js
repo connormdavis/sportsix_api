@@ -94,7 +94,7 @@ User.getAll = (result) => {
       result(err, null);
     } else {
       // return no error and user obj in 'res' var
-      result(null, res[0]);
+      result(null, res);
     }
   });
 };

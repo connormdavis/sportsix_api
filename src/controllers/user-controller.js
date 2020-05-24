@@ -65,7 +65,7 @@ exports.findAll = (req, res) => {
     }
     else {
       if (data) {
-        res.send(data[0]);
+        res.send(data);
       }
       else {
         res.status(500).send({
