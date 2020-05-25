@@ -74,6 +74,7 @@ exports.update = (req, res) => {
     range: req.body.range
   });
 
+
   // Update Instructor in the database
   Instructor.updateById(req.params.userID, updatedInstructor, (err, data) => {
     if (err) {
