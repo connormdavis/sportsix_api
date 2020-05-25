@@ -57,7 +57,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-
+   
 };
 
 // Find a single User with a userID
