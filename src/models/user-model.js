@@ -110,7 +110,7 @@ User.getAll = (result) => {
   });
 };
 
-// need to fix
+// NEED TO FIX
 // TODO: update user with new fields by id
 User.updateById = (userID, updatedUser, result) => {
   sql.query("UPDATE Users SET FirstName = ?, LastName = ?, Email = ?, Phone = ?, Address = ?, City = ?, State = ?, Zip = ? WHERE UserID = ?", [updatedUser.firstName, updatedUser.lastName, updatedUser.email, updatedUser.phone, updatedUser.address, updatedUser.city, updatedUser.state, updatedUser.zip, userID], (err, res) => {
@@ -148,7 +148,6 @@ User.removeAll = (result) => {
       result(err, null);
       return;
     } else {
-      // return no error and user obj in 'res' var
       console.log(`deleted all users: ${JSON.stringify(res)}`);
       result(null, res);
     }
@@ -159,7 +158,7 @@ User.removeAll = (result) => {
 /*
   'Plays' methods
 */
-// For some reason PositionID gets added as null
+
 // add position by given positionID to given user with userID
 User.addPosition = (userID, positionID, result) => {
   sql.query("INSERT INTO Plays (UserID, PositionID) VALUES (?, ?)", [userID, positionID], (err, res) => {
@@ -168,14 +167,13 @@ User.addPosition = (userID, positionID, result) => {
       result(err, null);
       return;
     } else {
-      // return no error and user obj in 'res' var
       console.log(`added position w/ ID ${positionID} to user w/ ID ${userID}: ${JSON.stringify(res)}`);
       result(null, res);
     }
   });
 };
 
-// For some reason does not delete the user id and the position
+
 // remove position by given positionID to given user with userID
 User.removePosition = (userID, positionID, result) => {
   sql.query("DELETE FROM Plays WHERE UserID = ? AND PositionID = ?", [userID, positionID], (err, res) => {
@@ -184,7 +182,6 @@ User.removePosition = (userID, positionID, result) => {
       result(err, null);
       return;
     } else {
-      // return no error and user obj in 'res' var
       console.log(`deleted position w/ ID ${positionID} to user w/ ID ${userID}: ${JSON.stringify(res)}`);
       result(null, res);
     }
@@ -199,7 +196,6 @@ User.getPositions = (userID, result) => {
       result(err, null);
       return;
     } else {
-      // return no error and user obj in 'res' var
       console.log(`getting positions for user w/ ID ${userID}: ${JSON.stringify(res)}`);
       result(null, res);
     }
@@ -214,7 +210,6 @@ User.getSports = (userID, result) => {
       result(err, null);
       return;
     } else {
-      // return no error and user obj in 'res' var
       console.log(`getting sports played for user w/ ID ${userID}: ${JSON.stringify(res)}`);
       result(null, res);
     }
