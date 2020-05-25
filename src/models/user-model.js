@@ -58,6 +58,7 @@ User.findById = (userID, result) => {
     } else {
       console.log(`no users found w/ ID ${userID}`);
       result(null, null);
+      return;
     }
   });
 };
@@ -67,6 +68,7 @@ User.findIdByEmail = (email, result) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
+      return;
     } else {
       // return no error and found id in 'res' var
       result(null, res[0]);
@@ -79,6 +81,7 @@ User.findByEmail = (email, result) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
+      return;
     } else {
       // return no error and user obj in 'res' var
       result(null, res[0]);
@@ -86,56 +89,136 @@ User.findByEmail = (email, result) => {
   });
 };
 
-// TODO: find all users
+
+
+// find all users
 User.getAll = (result) => {
   sql.query("SELECT * FROM Users", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
+      return;
     } else {
-      // return no error and user obj in 'res' var
+      if (res.length > 0) {
+        console.log(`found users: ${JSON.stringify(res)}`);
+        result(null, res);
+      } else {
+        console.log(`no users found`);
+        result(null, null);
+      }
+    }
+  });
+};
+
+// need to fix
+// TODO: update user with new fields by id
+User.updateById = (userID, updatedUser, result) => {
+  sql.query("UPDATE Users SET FirstName = ?, LastName = ?, Email = ?, Phone = ?, Address = ?, City = ?, State = ?, Zip = ? WHERE UserID = ?", [updatedUser.firstName, updatedUser.lastName, updatedUser.email, updatedUser.phone, updatedUser.address, updatedUser.city, updatedUser.state, updatedUser.zip, userID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    } else {
+      console.log(`updated user with ID ${userID}: ${JSON.stringify(res)}`);
       result(null, res);
     }
   });
 };
 
-// TODO: update user with new fields by id
-User.updateById = (id, user, result) => {
-  
+// delete user w/ given id
+User.removeById = (userID, result) => {
+  sql.query("DELETE FROM Users WHERE userID = ?", [userID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    } else {
+      console.log(`deleted all user with ID ${userID}: ${JSON.stringify(res)}`);
+      result(null, res);
+    }
+  });
 };
 
-// TODO: delete user w/ given id
-User.removeById = (id, result) => {
-  
-};
-
-// TODO: delete all users
+// Haven't tried it because I don't want to delete all the entries, but it should work...
+// delete all users
 User.removeAll = (result) => {
-  
+  sql.query("DELETE FROM Users", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    } else {
+      // return no error and user obj in 'res' var
+      console.log(`deleted all users: ${JSON.stringify(res)}`);
+      result(null, res);
+    }
+  });
 };
+
 
 /*
   'Plays' methods
 */
-
-// TODO: add position by given positionID to given user with userID
+// For some reason PositionID gets added as null
+// add position by given positionID to given user with userID
 User.addPosition = (userID, positionID, result) => {
-  
+  sql.query("INSERT INTO Plays (UserID, PositionID) VALUES (?, ?)", [userID, positionID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    } else {
+      // return no error and user obj in 'res' var
+      console.log(`added position w/ ID ${positionID} to user w/ ID ${userID}: ${JSON.stringify(res)}`);
+      result(null, res);
+    }
+  });
 };
 
-// TODO: remove position by given positionID to given user with userID
+// For some reason does not delete the user id and the position
+// remove position by given positionID to given user with userID
 User.removePosition = (userID, positionID, result) => {
-  
+  sql.query("DELETE FROM Plays WHERE UserID = ? AND PositionID = ?", [userID, positionID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    } else {
+      // return no error and user obj in 'res' var
+      console.log(`deleted position w/ ID ${positionID} to user w/ ID ${userID}: ${JSON.stringify(res)}`);
+      result(null, res);
+    }
+  });
 };
 
-// TODO: get positions played by user with given userID
+// get positions played by user with given userID
 User.getPositions = (userID, result) => {
-  
+  sql.query("SELECT DISTINCT Positions.Name FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID WHERE Plays.UserID = ?", [userID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    } else {
+      // return no error and user obj in 'res' var
+      console.log(`getting positions for user w/ ID ${userID}: ${JSON.stringify(res)}`);
+      result(null, res);
+    }
+  });
 };
 
-// TODO: get all sports played by user with given userID by checking all played positions
+// get all sports played by user with given userID by checking all played positions
 User.getSports = (userID, result) => {
-  
+  sql.query("SELECT DISTINCT Sports.Name FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID JOIN Sports ON Positions.SportID = Sports.SportID WHERE Plays.UserID = ?", [userID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    } else {
+      // return no error and user obj in 'res' var
+      console.log(`getting sports played for user w/ ID ${userID}: ${JSON.stringify(res)}`);
+      result(null, res);
+    }
+  });
 };
 
 /*
