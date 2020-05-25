@@ -182,7 +182,7 @@ exports.deleteAll = (req, res) => {
   'Plays' methods
 */
 
-// TODO: Add new position (from given positionID) for user with given userID
+// Add new position (from given positionID) for user with given userID
 exports.addPosition = (req, res) => {
   // Validate request
   if (!req.body) {
@@ -207,7 +207,7 @@ exports.addPosition = (req, res) => {
   });
 };
 
-// TODO: Remove position (from given positionID) for user with given userID
+// Remove position (from given positionID) for user with given userID
 exports.removePosition = (req, res) => {
   // Validate request
   if (!req.body) {
