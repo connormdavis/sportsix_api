@@ -113,7 +113,7 @@ User.getAll = (result) => {
 // NEED TO FIX
 // TODO: update user with new fields by id
 User.updateById = (userID, updatedUser, result) => {
-  sql.query("UPDATE Users SET FirstName = ?, LastName = ?, Email = ?, Phone = ?, Address = ?, City = ?, State = ?, Zip = ? WHERE UserID = ?", [updatedUser.firstName, updatedUser.lastName, updatedUser.email, updatedUser.phone, updatedUser.address, updatedUser.city, updatedUser.state, updatedUser.zip, userID], (err, res) => {
+  sql.query("UPDATE Users SET FirstName = ?, LastName = ?, Email = ?, Phone = ? WHERE UserID = ?", [updatedUser.firstName, updatedUser.lastName, updatedUser.email, updatedUser.phone, userID], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);

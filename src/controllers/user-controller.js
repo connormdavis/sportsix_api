@@ -96,8 +96,7 @@ exports.findOne = (req, res) => {
   });
 };
 
-// not sure what exactly to update...
-// TODO: Update a User identified by the userID in the request
+// Update a User identified by the userID in the request
 exports.update = (req, res) => {
   // Validate request
   if (!req.body) {
@@ -106,20 +105,16 @@ exports.update = (req, res) => {
     });
   }
 
-  //   // create a user with updated info
-  //   const updatedUser = new User({
-  //     firstName: req.body.firstName,
-  //     lastName: req.body.lastName,
-  //     email: req.body.email,
-  //     phone: req.body.phone,
-  //     address: req.body.address,
-  //     city: req.body.city,
-  //     state: req.body.state,
-  //     zip: req.body.zip,
-  // });
+    // create a user with updated info
+    const updatedUser = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      phone: req.body.phone,
+  });
   
     // use the id passed as query paramater & use body for user fields
-    User.updateById(req.params.userID, (err, data) => {
+    User.updateById(req.params.userID, updatedUser, (err, data) => {
       if (err) {
         res.status(500).send({
           message: err.message || "Some error occurred while attempting to update the user."
