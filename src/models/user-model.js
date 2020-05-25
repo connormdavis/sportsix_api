@@ -110,8 +110,7 @@ User.getAll = (result) => {
   });
 };
 
-// NEED TO FIX
-// TODO: update user with new fields by id
+//  update user with new fields by id
 User.updateById = (userID, updatedUser, result) => {
   sql.query("UPDATE Users SET FirstName = ?, LastName = ?, Email = ?, Phone = ? WHERE UserID = ?", [updatedUser.firstName, updatedUser.lastName, updatedUser.email, updatedUser.phone, userID], (err, res) => {
     if (err) {
