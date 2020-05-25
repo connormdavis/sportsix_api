@@ -19,12 +19,12 @@ router.get('/', function (req, res) {
 /*
   'users' routes
 */
-router.get('/users', users.findAll);
-router.get('/users/:userID', users.findOne);
-router.put('/users/:userID', users.update);
-router.delete('/users', users.deleteAll);
-router.delete('/users/:userID', users.delete);
-router.post('/users', users.create);
+router.get('/users', users.findAll);            // works
+router.get('/users/:userID', users.findOne);    // works
+router.put('/users/:userID', users.update);     // not working, confused
+router.delete('/users', users.deleteAll);       // probably works, not going to try
+router.delete('/users/:userID', users.delete);  // works
+router.post('/users', users.create);            // works
 
 /*
   'instructors' routes
@@ -51,14 +51,14 @@ router.get('/instructors/sports/:userID', instructors.getSports);
 /*
   'plays' position routes
 */
-router.get('/users/positions/:userID', users.getPositions);
-router.post('/users/positions/:userID', users.addPosition);
-router.delete('/users/positions/:userID', users.removePosition);
+router.get('/users/positions/:userID', users.getPositions);       // works
+router.post('/users/positions/:userID', users.addPosition);       // works
+router.delete('/users/positions/:userID', users.removePosition);  // works
 
 /*
   'plays' sport routes
 */
-router.get('/users/sports/:userID', instructors.getSports);
+router.get('/users/sports/:userID', users.getSports);   // works
 
 /*
   'auth' routes
