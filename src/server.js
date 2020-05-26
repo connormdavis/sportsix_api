@@ -18,7 +18,7 @@ app.use(morgan('dev'));
 // enable/disable cross origin resource sharing if necessary
 app.use(cors());
 
-var port = process.env.PORT || 8080;        // set our port
+var port = process.env.PORT || 3000;        // set our port
 
 // Register routes (all will begin w/ '/api/v1')
 app.use('/api/v1', v1Routes);
