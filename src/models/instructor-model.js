@@ -23,22 +23,80 @@ Instructor.create = (newInstructor, result) => {
 
 Instructor.findById = (userID, result) => {
   // find instructor by their id 
+  sql.query("SELECT * FROM Instructors WHERE Instructors.UserID = ?", [userID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    if (res.length > 0) {
+      console.log(`found instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+      result(null, res);
+    } else {
+      console.log(`no instructors found w/ ID ${userID}`);
+      result(null, null);
+    }
+  });
 };
 
 Instructor.getAll = (result) => {
-  // find all users
+  // find all instructors
+  sql.query("SELECT * FROM Instructors", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    if (res.length > 0) {
+      console.log(`found instructors: ${JSON.stringify(res)}`);
+      result(null, res);
+    } else {
+      console.log(`no instructors found`);
+      result(null, null);
+    }
+  });
 };
 
-Instructor.updateById = (userID, user, result) => {
+// needs to be updated once Instructor class is updated 
+Instructor.updateById = (userID, updatedInstructor, result) => {
   // update instructor with new fields by id
+  sql.query("UPDATE Instructors SET Instructors.Range = ? WHERE UserID = ?", [updatedInstructor.range, userID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log(`updated instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+    result(null, res);
+    
+  });
 };
+
 
 Instructor.removeById = (userID, result) => {
   // delete instructor w/ given id
+  sql.query("DELETE FROM Instructors WHERE UserID = ?", [userID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log(`deleted instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+    result(null, res);
+  });
 };
 
 Instructor.removeAll = (result) => {
   // delete all instructors
+  sql.query("DELETE FROM Instructors", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+      console.log(`deleted all instructors: ${JSON.stringify(res)}`);
+      result(null, res);
+  });
 };
 
 /*
@@ -47,18 +105,65 @@ Instructor.removeAll = (result) => {
 
 Instructor.addPosition = (userID, positionID, result) => {
   // add position by given positionID to given user with userID
+  sql.query("INSERT INTO Instructs (UserID, PositionID) VALUES (?, ?)", [userID, positionID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+      console.log(`added position w/ ID ${positionID} to instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+      result(null, res);
+  });
 };
 
 Instructor.removePosition = (userID, positionID, result) => {
   // remove position by given positionID to given user with userID
+  sql.query("DELETE FROM Instructs WHERE UserID = ? AND PositionID = ?", [userID, positionID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+      console.log(`deleted position w/ ID ${positionID} from instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+      result(null, res);
+  });
 };
 
 Instructor.getPositions = (userID, result) => {
-  // get positions instructed by instructor with given userID
+  // get all position names instructed by instructor with given userID
+  sql.query("SELECT DISTINCT Positions.PositionID, Positions.Name FROM Instructs JOIN Positions ON Instructs.PositionID = Positions.PositionID WHERE Instructs.UserID = ?", [userID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    if (res.length > 0) {
+      console.log(`found position(s) for instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+      result(null, res);
+    } else {
+      console.log(`no positions found for instructor w/ ID ${userID}`);
+      result(null, null);
+    }
+  });
 };
 
 Instructor.getSports = (userID, result) => {
-  // get all sports associated with instructor by checking all positions
+  // get all sport names associated with instructor by checking all positions
+  sql.query("SELECT DISTINCT Sports.SportID, Sports.Name FROM Instructs JOIN Positions ON Instructs.PositionID = Positions.PositionID JOIN Sports ON Positions.SportID = Sports.SportID WHERE Instructs.UserID = ?", [userID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    if (res.length > 0) {
+      console.log(`found sport(s) for instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+      result(null, res);
+    } else {
+      console.log(`no sports found for instructor w/ ID ${userID}`);
+      result(null, null);
+    }
+      
+  });
 };
 
 export default Instructor;
