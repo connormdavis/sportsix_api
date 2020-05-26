@@ -11,7 +11,8 @@ exports.create = (req, res) => {
     });
   }
 
-  geo.addressToLatLon(req.body.address, (err, location) => {
+  const address = `${req.body.address} ${req.body.city}, ${req.body.state} ${req.body.zip}`;
+  geo.addressToLatLon(address, (err, location) => {
     if (err) {
       console.log('error: ', err);
     }
