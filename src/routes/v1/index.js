@@ -3,6 +3,8 @@ var router = express.Router();              // get an instance of the express Ro
 import sql from '../../models/db';
 import users from '../../controllers/user-controller';
 import instructors from '../../controllers/instructor-controller';
+import sports from '../../controllers/sport-controller';
+import positions from '../../controllers/position-controller';
 
 // test route
 router.get('/', function (req, res) {
@@ -65,5 +67,14 @@ router.get('/users/sports/:userID', users.getSports);   // works
 */
 router.post('/signin', users.authUser);
 
+/*
+  'sports' routes
+*/
+router.get('/sports', sports.findAll);
+
+/*
+  'positions' routes
+*/
+router.get('/positions/:sportID', positions.findAll);
 
 export default router;

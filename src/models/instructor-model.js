@@ -23,7 +23,7 @@ Instructor.create = (newInstructor, result) => {
 
 Instructor.findById = (userID, result) => {
   // find instructor by their id 
-  sql.query("SELECT * FROM Instructors WHERE Instructors.UserID = ?", [userID], (err, res) => {
+  sql.query("SELECT * FROM Instructors as I JOIN Users as U ON I.UserID = U.UserID WHERE I.UserID = ? AND U.is_instructor = 1", [userID], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -68,7 +68,7 @@ Instructor.updateById = (userID, updatedInstructor, result) => {
     }
     console.log(`updated instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
     result(null, res);
-    
+
   });
 };
 
@@ -94,8 +94,8 @@ Instructor.removeAll = (result) => {
       result(err, null);
       return;
     }
-      console.log(`deleted all instructors: ${JSON.stringify(res)}`);
-      result(null, res);
+    console.log(`deleted all instructors: ${JSON.stringify(res)}`);
+    result(null, res);
   });
 };
 
@@ -111,8 +111,8 @@ Instructor.addPosition = (userID, positionID, result) => {
       result(err, null);
       return;
     }
-      console.log(`added position w/ ID ${positionID} to instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
-      result(null, res);
+    console.log(`added position w/ ID ${positionID} to instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+    result(null, res);
   });
 };
 
@@ -124,8 +124,8 @@ Instructor.removePosition = (userID, positionID, result) => {
       result(err, null);
       return;
     }
-      console.log(`deleted position w/ ID ${positionID} from instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
-      result(null, res);
+    console.log(`deleted position w/ ID ${positionID} from instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+    result(null, res);
   });
 };
 
@@ -162,7 +162,7 @@ Instructor.getSports = (userID, result) => {
       console.log(`no sports found for instructor w/ ID ${userID}`);
       result(null, null);
     }
-      
+
   });
 };
 
