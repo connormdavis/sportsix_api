@@ -22,7 +22,7 @@ Instructor.create = (newInstructor, result) => {
 };
 
 Instructor.findById = (userID, result) => {
-  // find instructor by their id 
+  // find instructor by their id
   sql.query("SELECT * FROM Instructors as I JOIN Users as U ON I.UserID = U.UserID WHERE I.UserID = ? AND U.is_instructor = 1", [userID], (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -41,7 +41,7 @@ Instructor.findById = (userID, result) => {
 
 Instructor.getAll = (result) => {
   // find all instructors
-  sql.query("SELECT * FROM Instructors", (err, res) => {
+  sql.query("SELECT * FROM Instructors as I JOIN Users as U ON I.UserID = U.UserID WHERE I.UserID = ? AND U.is_instructor = 1", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -57,7 +57,7 @@ Instructor.getAll = (result) => {
   });
 };
 
-// needs to be updated once Instructor class is updated 
+// needs to be updated once Instructor class is updated
 Instructor.updateById = (userID, updatedInstructor, result) => {
   // update instructor with new fields by id
   sql.query("UPDATE Instructors SET Instructors.Range = ? WHERE UserID = ?", [updatedInstructor.range, userID], (err, res) => {
