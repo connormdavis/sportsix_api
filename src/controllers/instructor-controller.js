@@ -44,7 +44,7 @@ exports.findAll = (req, res) => {
 // Find a single Instructor with a userID
 exports.findOne = (req, res) => {
   // Find specific instructor 
-  
+
   Instructor.findById(req.params.userID, (err, data) => {
     if (err) {
       res.status(500).send({
@@ -121,7 +121,7 @@ exports.deleteAll = (req, res) => {
 
 // Add new position (from given positionID) for instructor with given userID
 exports.addPosition = (req, res) => {
-  
+
   // Validate request (need positionID in body)
   if (!req.body) {
     res.status(400).send({
@@ -144,7 +144,7 @@ exports.addPosition = (req, res) => {
 
 // Remove position (from given positionID) for instructor with given userID
 exports.removePosition = (req, res) => {
-  
+
   // Validate request (need positionID in body)
   if (!req.body) {
     res.status(400).send({
@@ -194,4 +194,28 @@ exports.getSports = (req, res) => {
     }
   });
 
+};
+
+exports.findAllByPosition = (req, res) => {
+  Instructor.findByPosition(req.params.positionID, (err, data) => {
+    if (err) {
+      res.status(500).send({
+        message: err.message || "Some error occurred while getting all instructors by positionID."
+      });
+    } else {
+      res.send(data);
+    }
+  });
+};
+
+exports.findAllBySport = (req, res) => {
+  Instructor.findBySport(req.params.sportID, (err, data) => {
+    if (err) {
+      res.status(500).send({
+        message: err.message || "Some error occurred while getting all instructors by sportID."
+      });
+    } else {
+      res.send(data);
+    }
+  });
 };

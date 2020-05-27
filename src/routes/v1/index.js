@@ -32,6 +32,8 @@ router.post('/users', users.create);            // works
   'instructors' routes
 */
 router.get('/instructors', instructors.findAll);
+router.get('/instructors/byposition/:positionID', instructors.findAllByPosition);
+router.get('/instructors/bysport/:sportID', instructors.findAllBySport);
 router.get('/instructors/:userID', instructors.findOne);
 router.put('/instructors/:userID', instructors.update);
 router.delete('/instructors', instructors.deleteAll);

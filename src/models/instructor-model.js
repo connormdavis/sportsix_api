@@ -41,9 +41,7 @@ Instructor.findById = (userID, result) => {
 
 Instructor.getAll = (result) => {
   // find all instructors
-  sql.query("SELECT I.*, U.*, PS.Name as Position, S.Name as Sport FROM Instructors as I JOIN Users as U ON I.UserID = U.UserID\n" +
-    "JOIN Instructs as T ON I.UserID = T.UserID JOIN Positions as PS ON T.PositionID = PS.PositionID\n" +
-    "JOIN Sports as S ON S.SportID = PS.SportID", (err, res) => {
+  sql.query("SELECT I.*, U.* FROM Instructors as I JOIN Users as U ON I.UserID = U.UserID", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -165,6 +163,40 @@ Instructor.getSports = (userID, result) => {
       result(null, null);
     }
 
+  });
+};
+
+Instructor.findBySport = (sportID, result) => {
+  sql.query("SELECT DISTINCT I.*, U.* FROM Instructors as I JOIN Users as U ON I.UserID = U.UserID JOIN Instructs ON I.UserID = Instructs.UserID JOIN Positions ON Positions.PositionID = Instructs.PositionID JOIN Sports ON Sports.SportID = Positions.SportID WHERE Sports.SportID = ?", [sportID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    if (res.length > 0) {
+      console.log(`found instructors that play sport w/ ID ${sportID}: ${JSON.stringify(res)}`);
+      result(null, res);
+    } else {
+      console.log(`no instructors found`);
+      result(null, null);
+    }
+  });
+};
+
+Instructor.findByPosition = (positionID, result) => {
+  sql.query("SELECT I.*, U.* FROM Instructors as I JOIN Users as U ON I.UserID = U.UserID JOIN Instructs ON I.UserID = Instructs.UserID WHERE Instructs.PositionID = ?", [positionID], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    if (res.length > 0) {
+      console.log(`found instructors that play position w/ ID ${positionID}: ${JSON.stringify(res)}`);
+      result(null, res);
+    } else {
+      console.log(`no instructors found`);
+      result(null, null);
+    }
   });
 };
 
