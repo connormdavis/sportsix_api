@@ -41,7 +41,9 @@ Instructor.findById = (userID, result) => {
 
 Instructor.getAll = (result) => {
   // find all instructors
-  sql.query("SELECT * FROM Instructors as I JOIN Users as U ON I.UserID = U.UserID", (err, res) => {
+  sql.query("SELECT I.*, U.*, PS.Name as Position, S.Name as Sport FROM Instructors as I JOIN Users as U ON I.UserID = U.UserID\n" +
+    "JOIN Instructs as T ON I.UserID = T.UserID JOIN Positions as PS ON T.PositionID = PS.PositionID\n" +
+    "JOIN Sports as S ON S.SportID = PS.SportID", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
