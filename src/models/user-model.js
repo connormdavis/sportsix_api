@@ -123,7 +123,7 @@ User.updateById = (userID, updatedUser, result) => {
       return;
     } else {
       console.log(`updated user with ID ${userID}: ${JSON.stringify(res)}`);
-
+      console.log(`UPDATED USER OBJECT ${updatedUser}`);
       // if is_instructor, get the full instructor AND user info object
       if (updatedUser.is_instructor) {
         console.log('updated user is instructor so use instructor findByID');
