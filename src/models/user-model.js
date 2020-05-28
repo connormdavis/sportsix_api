@@ -1,6 +1,7 @@
 import sql from './db';
 import bcrypt from 'bcryptjs';
 import geo from './geocodio';
+import Sport from './sport-model';
 
 const User = function (user) {
   this.firstName = user.firstName;
@@ -56,7 +57,7 @@ User.findById = (userID, result) => {
     }
     if (res.length > 0) {
       console.log(`found user w/ ID ${userID}: ${JSON.stringify(res)}`);
-      result(null, res[0]);
+      result(null, res);
     } else {
       console.log(`no users found w/ ID ${userID}`);
       result(null, null);
@@ -191,7 +192,7 @@ User.removePosition = (userID, positionID, result) => {
 
 // get positions played by user with given userID
 User.getPositions = (userID, result) => {
-  sql.query("SELECT DISTINCT Positions.Name, Positions.SportID FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID WHERE Plays.UserID = ?", [userID], (err, res) => {
+  sql.query("SELECT DISTINCT Positions.Name, Positions.SportID, Positions.PositionID FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID WHERE Plays.UserID = ?", [userID], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -205,14 +206,23 @@ User.getPositions = (userID, result) => {
 
 // get all sports played by user with given userID by checking all played positions
 User.getSports = (userID, result) => {
-  sql.query("SELECT DISTINCT Sports.Name, Sports.SportID FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID JOIN Sports ON Positions.SportID = Sports.SportID WHERE Plays.UserID = ?", [userID], (err, res) => {
+  sql.query("SELECT DISTINCT Sports.Name, Sports.SportID FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID JOIN Sports ON Positions.SportID = Sports.SportID WHERE Plays.UserID = ?", [userID], (err, sportsRes) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     } else {
-      console.log(`getting sports played for user w/ ID ${userID}: ${JSON.stringify(res)}`);
-      result(null, res);
+      console.log(`got sports played for user w/ ID ${userID}: ${JSON.stringify(sportsRes)}`);
+      sql.query("SELECT DISTINCT Positions.Name, Positions.SportID, Positions.PositionID FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID WHERE Plays.UserID = ?", [userID], (positionsErr, positionsRes) => {
+        if (positionsErr) {
+          console.log("error: ", positionsErr);
+          result(positionsErr, null);
+          return;
+        } else {
+          const assembledList = Sport.assembleSportsWithPositionsList(sportsRes, positionsRes);
+          result(null, assembledList);
+        }
+      });
     }
   });
 };

@@ -26,5 +26,20 @@ Sport.getSports = (result) => {
   });
 };
 
+Sport.assembleSportsWithPositionsList = (sportsList, positionsList) => {
+  const tmpList = [];
+  sportsList.forEach((sport) => {
+    tmpList.push({
+      sportID: sport.SportID,
+      sport: sport.Name,
+      positions: [],
+    });
+  });
+  positionsList.forEach((position) => {
+    tmpList.filter((sport) => sport.sportID === position.SportID)[0].positions.push(position);
+  });
+  return tmpList;
+};
+
 
 export default Sport;
