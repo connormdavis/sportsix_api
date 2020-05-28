@@ -123,7 +123,7 @@ exports.update = (req, res) => {
     }
     else {
       if (data) {
-        res.send(data);
+        res.send(data[0]);
       }
       else {
         res.status(500).send({

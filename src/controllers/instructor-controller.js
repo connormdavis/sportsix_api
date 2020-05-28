@@ -54,7 +54,7 @@ exports.findOne = (req, res) => {
         message: err.message || "Some error occurred while getting instructor."
       });
     } else {
-      res.send(data);
+      res.send(data[0]);
     }
   });
 
@@ -88,7 +88,7 @@ exports.update = (req, res) => {
         message: err.message || "Some error occurred while updating the Instructor."
       });
     } else {
-      res.send(data);
+      res.send(data[0]);
     }
   });
 
