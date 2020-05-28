@@ -126,6 +126,7 @@ User.updateById = (userID, updatedUser, result) => {
 
       // if is_instructor, get the full instructor AND user info object
       if (updatedUser.is_instructor) {
+        console.log('updated user is instructor so use instructor findByID');
         Instructor.findById(userID, (getUserErr, user) => {
           if (getUserErr) {
             console.log("error: ", getUserErr);
@@ -135,6 +136,7 @@ User.updateById = (userID, updatedUser, result) => {
           result(null, user);
         });
       } else {
+        console.log('updated user is just a user so use user findByID');
         // get & return updated user
         User.findById(userID, (getUserErr, user) => {
           if (getUserErr) {
@@ -285,7 +287,19 @@ User.checkPassword = (email, plainPassword, result) => {
         } else {
           // if passwords match, return user object
           if (res) {
-            result(null, user);
+            // if user is an instructor, get full user object with instructor info
+            if (res.is_instructor) {
+              Instructor.findById(userID, (getUserErr, newUser) => {
+                if (getUserErr) {
+                  console.log("error: ", getUserErr);
+                  result(getUserErr, null);
+                  return;
+                }
+                result(null, newUser);
+              });
+            } else {
+              result(null, user);
+            }
           } else {
             result(null, null);
           }
