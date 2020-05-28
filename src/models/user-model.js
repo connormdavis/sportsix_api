@@ -288,7 +288,7 @@ User.checkPassword = (email, plainPassword, result) => {
           // if passwords match, return user object
           if (res) {
             // if user is an instructor, get full user object with instructor info
-            if (res.is_instructor) {
+            if (user.is_instructor) {
               Instructor.findById(userID, (getUserErr, newUser) => {
                 if (getUserErr) {
                   console.log("error: ", getUserErr);
