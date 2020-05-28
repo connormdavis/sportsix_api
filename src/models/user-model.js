@@ -289,7 +289,7 @@ User.checkPassword = (email, plainPassword, result) => {
           if (res) {
             // if user is an instructor, get full user object with instructor info
             if (user.is_instructor) {
-              Instructor.findById(userID, (getUserErr, newUser) => {
+              Instructor.findById(user.UserID, (getUserErr, newUser) => {
                 if (getUserErr) {
                   console.log("error: ", getUserErr);
                   result(getUserErr, null);
