@@ -34,7 +34,7 @@ Instructor.findById = (userID, result) => {
     }
     if (res.length > 0) {
       console.log(`found instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
-      result(null, res);
+      result(null, res[0]);
     } else {
       console.log(`no instructors found w/ ID ${userID}`);
       result(null, null);
