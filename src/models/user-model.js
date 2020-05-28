@@ -191,7 +191,7 @@ User.removePosition = (userID, positionID, result) => {
 
 // get positions played by user with given userID
 User.getPositions = (userID, result) => {
-  sql.query("SELECT DISTINCT Positions.Name FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID WHERE Plays.UserID = ?", [userID], (err, res) => {
+  sql.query("SELECT DISTINCT Positions.Name, Positions.SportID FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID WHERE Plays.UserID = ?", [userID], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -205,7 +205,7 @@ User.getPositions = (userID, result) => {
 
 // get all sports played by user with given userID by checking all played positions
 User.getSports = (userID, result) => {
-  sql.query("SELECT DISTINCT Sports.Name FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID JOIN Sports ON Positions.SportID = Sports.SportID WHERE Plays.UserID = ?", [userID], (err, res) => {
+  sql.query("SELECT DISTINCT Sports.Name, Sports.SportID FROM Plays JOIN Positions ON Plays.PositionID = Positions.PositionID JOIN Sports ON Positions.SportID = Sports.SportID WHERE Plays.UserID = ?", [userID], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -222,7 +222,7 @@ User.getSports = (userID, result) => {
 */
 
 User.checkPassword = (email, plainPassword, result) => {
-  // look for user 
+  // look for user
   User.findByEmail(email, (err, user) => {
     if (err) {
       console.log('error: ', err);
