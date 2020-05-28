@@ -14,6 +14,8 @@ const User = function (user) {
   this.zip = user.zip;
   this.lat = user.lat;
   this.lon = user.lon;
+  // default to not instructor
+  this.is_instructor = 0;
 };
 
 /*
@@ -31,7 +33,7 @@ User.create = (newUser, result) => {
       }
 
       // Store hash in your password DB.
-      sql.query("INSERT INTO Users (FirstName, LastName, Email, Password, Phone, Address, City, State, Zip, Lat, Lon, c_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())", [newUser.firstName, newUser.lastName, newUser.email, hash, newUser.phone, newUser.address, newUser.city, newUser.state, newUser.zip, newUser.lat, newUser.lon], (err, res) => {
+      sql.query("INSERT INTO Users (FirstName, LastName, Email, Password, Phone, Address, City, State, Zip, Lat, Lon, is_instructor, c_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())", [newUser.firstName, newUser.lastName, newUser.email, hash, newUser.phone, newUser.address, newUser.city, newUser.state, newUser.zip, newUser.lat, newUser.lon, newUser.is_instructor], (err, res) => {
         if (err) {
           console.log("ERROR making query: ", err);
           result(err, null);

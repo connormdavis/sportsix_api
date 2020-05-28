@@ -12,7 +12,10 @@ exports.create = (req, res) => {
   // Create an Instructor
   const instructor = new Instructor({
     userID: req.body.userID,
-    range: req.body.range
+    active: req.body.active,
+    range: req.body.range,
+    rating: req.body.rating,
+    rate: req.body.rate,
   });
 
   // Save Instructor in the database
@@ -70,10 +73,13 @@ exports.update = (req, res) => {
 
   // Create an Instructor w/ updated info
   const updatedInstructor = new Instructor({
-    userID: req.body.userID,
-    range: req.body.range
+    active: req.body.active,
+    range: req.body.range,
+    rating: req.body.rating,
+    rate: req.body.rate,
   });
 
+  console.log('updated instructor object: ' + JSON.stringify(updatedInstructor));
 
   // Update Instructor in the database
   Instructor.updateById(req.params.userID, updatedInstructor, (err, data) => {

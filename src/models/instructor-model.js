@@ -2,7 +2,10 @@ import sql from './db';
 
 const Instructor = function (instructor) {
   this.userID = instructor.userID;
+  this.active = instructor.active;
   this.range = instructor.range;
+  this.rating = instructor.rating;
+  this.rate = instructor.rate;
 };
 
 /*
@@ -10,7 +13,7 @@ const Instructor = function (instructor) {
 */
 
 Instructor.create = (newInstructor, result) => {
-  sql.query("INSERT INTO Instructors (UserID, Range) VALUES (?, ?)", [newInstructor.userID, newInstructor.range], (err, res) => {
+  sql.query("INSERT INTO Instructors (UserID, active, Range, Rating, Rate) VALUES (?, ?)", [newInstructor.userID, newInstructor.active, newInstructor.range, newInstructor.rating, newInstructor.rate], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -60,7 +63,7 @@ Instructor.getAll = (result) => {
 // needs to be updated once Instructor class is updated
 Instructor.updateById = (userID, updatedInstructor, result) => {
   // update instructor with new fields by id
-  sql.query("UPDATE Instructors SET Instructors.Range = ? WHERE UserID = ?", [updatedInstructor.range, userID], (err, res) => {
+  sql.query("UPDATE Instructors as I SET I.active = ?, I.Range = ?, I.Rating = ?, I.Rate = ? WHERE UserID = ?", [updatedInstructor.active, updatedInstructor.range, updatedInstructor.rating, updatedInstructor.rate, userID], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -128,6 +131,19 @@ Instructor.removePosition = (userID, positionID, result) => {
     result(null, res);
   });
 };
+
+// removes all positions under given sport
+// Instructor.removeSport = (userID, sportID, result) => {
+//   sql.query("DELETE FROM Instructs WHERE UserID = ? AND PositionID = ?", [userID, positionID], (err, res) => {
+//     if (err) {
+//       console.log("error: ", err);
+//       result(err, null);
+//       return;
+//     }
+//     console.log(`deleted position w/ ID ${positionID} from instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+//     result(null, res);
+//   });
+// };
 
 Instructor.getPositions = (userID, result) => {
   // get all position names instructed by instructor with given userID

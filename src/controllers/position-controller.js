@@ -29,7 +29,7 @@ exports.create = (req, res) => {
 
 // Retrieve all positions associated with given sportID
 exports.findAll = (req, res) => {
-  // Find all the instructors 
+  // Find all the positions 
   Position.getPositionsBySportID(req.params.sportID, (err, data) => {
     if (err) {
       res.status(500).send({
