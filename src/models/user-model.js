@@ -17,7 +17,7 @@ const User = function (user) {
   this.lat = user.lat;
   this.lon = user.lon;
   // default to not instructor
-  this.is_instructor = 0;
+  this.is_instructor = user.is_instructor || 0;
 };
 
 /*
