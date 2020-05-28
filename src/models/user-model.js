@@ -295,7 +295,7 @@ User.checkPassword = (email, plainPassword, result) => {
                   result(getUserErr, null);
                   return;
                 }
-                result(null, newUser);
+                result(null, newUser[0]);
               });
             } else {
               result(null, user);

@@ -23,7 +23,7 @@ router.get('/', function (req, res) {
 */
 router.get('/users', users.findAll);            // works
 router.get('/users/:userID', users.findOne);    // works
-router.put('/users/:userID', users.update);     // not working, confused
+router.put('/users/:userID', users.update);     // works
 router.delete('/users', users.deleteAll);       // probably works, not going to try
 router.delete('/users/:userID', users.delete);  // works
 router.post('/users', users.create);            // works
