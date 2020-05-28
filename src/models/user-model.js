@@ -56,7 +56,7 @@ User.findById = (userID, result) => {
     }
     if (res.length > 0) {
       console.log(`found user w/ ID ${userID}: ${JSON.stringify(res)}`);
-      result(null, res);
+      result(null, res[0]);
     } else {
       console.log(`no users found w/ ID ${userID}`);
       result(null, null);
