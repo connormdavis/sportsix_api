@@ -2,6 +2,7 @@ import sql from './db';
 import bcrypt from 'bcryptjs';
 import geo from './geocodio';
 import Sport from './sport-model';
+import Instructor from './instructor-model';
 
 const User = function (user) {
   this.firstName = user.firstName;
@@ -122,15 +123,28 @@ User.updateById = (userID, updatedUser, result) => {
       return;
     } else {
       console.log(`updated user with ID ${userID}: ${JSON.stringify(res)}`);
-      // get & return updated user
-      User.findById(userID, (getUserErr, user) => {
-        if (getUserErr) {
-          console.log("error: ", getUserErr);
-          result(getUserErr, null);
-          return;
-        }
-        result(null, user);
-      });
+
+      // if is_instructor, get the full instructor AND user info object
+      if (updatedUser.is_instructor) {
+        Instructor.findById(userID, (getUserErr, user) => {
+          if (getUserErr) {
+            console.log("error: ", getUserErr);
+            result(getUserErr, null);
+            return;
+          }
+          result(null, user);
+        });
+      } else {
+        // get & return updated user
+        User.findById(userID, (getUserErr, user) => {
+          if (getUserErr) {
+            console.log("error: ", getUserErr);
+            result(getUserErr, null);
+            return;
+          }
+          result(null, user);
+        });
+      }
     }
   });
 };

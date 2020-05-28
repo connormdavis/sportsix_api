@@ -112,6 +112,7 @@ exports.update = (req, res) => {
     lastName: req.body.lastName,
     email: req.body.email,
     phone: req.body.phone,
+    is_instructor: req.body.is_instructor || false,
   });
 
   // use the id passed as query paramater & use body for user fields
