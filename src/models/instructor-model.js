@@ -69,10 +69,18 @@ Instructor.updateById = (userID, updatedInstructor, result) => {
       console.log("error: ", err);
       result(err, null);
       return;
+    } else {
+      console.log(`updated instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
+      // get & return updated instructor
+      Instructor.findById(userID, (getUserErr, user) => {
+        if (getUserErr) {
+          console.log("error: ", getUserErr);
+          result(getUserErr, null);
+          return;
+        }
+        result(null, user);
+      });
     }
-    console.log(`updated instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
-    result(null, res);
-
   });
 };
 
@@ -116,7 +124,15 @@ Instructor.addPosition = (userID, positionID, result) => {
       return;
     }
     console.log(`added position w/ ID ${positionID} to instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
-    result(null, res);
+    // call function that gets user sports array
+    Instructor.getSports(userID, (getSportsErr, getSportsRes) => {
+      if (getSportsErr) {
+        console.log("error: ", err);
+        result(getSportsErr, null);
+        return;
+      }
+      result(null, getSportsRes);
+    });
   });
 };
 
@@ -129,7 +145,15 @@ Instructor.removePosition = (userID, positionID, result) => {
       return;
     }
     console.log(`deleted position w/ ID ${positionID} from instructor w/ ID ${userID}: ${JSON.stringify(res)}`);
-    result(null, res);
+    // call function that gets user sports array
+    Instructor.getSports(userID, (getSportsErr, getSportsRes) => {
+      if (getSportsErr) {
+        console.log("error: ", err);
+        result(getSportsErr, null);
+        return;
+      }
+      result(null, getSportsRes);
+    });
   });
 };
 

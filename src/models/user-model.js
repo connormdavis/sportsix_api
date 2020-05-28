@@ -122,7 +122,15 @@ User.updateById = (userID, updatedUser, result) => {
       return;
     } else {
       console.log(`updated user with ID ${userID}: ${JSON.stringify(res)}`);
-      result(null, res);
+      // get & return updated user
+      User.findById(userID, (getUserErr, user) => {
+        if (getUserErr) {
+          console.log("error: ", getUserErr);
+          result(getUserErr, null);
+          return;
+        }
+        result(null, user);
+      });
     }
   });
 };
@@ -170,7 +178,15 @@ User.addPosition = (userID, positionID, result) => {
       return;
     } else {
       console.log(`added position w/ ID ${positionID} to user w/ ID ${userID}: ${JSON.stringify(res)}`);
-      result(null, res);
+      // call function that gets user sports array
+      User.getSports(userID, (getSportsErr, getSportsRes) => {
+        if (getSportsErr) {
+          console.log("error: ", err);
+          result(getSportsErr, null);
+          return;
+        }
+        result(null, getSportsRes)
+      });
     }
   });
 };
@@ -185,7 +201,15 @@ User.removePosition = (userID, positionID, result) => {
       return;
     } else {
       console.log(`deleted position w/ ID ${positionID} to user w/ ID ${userID}: ${JSON.stringify(res)}`);
-      result(null, res);
+      // call function that gets user sports array
+      User.getSports(userID, (getSportsErr, getSportsRes) => {
+        if (getSportsErr) {
+          console.log("error: ", err);
+          result(getSportsErr, null);
+          return;
+        }
+        result(null, getSportsRes);
+      });
     }
   });
 };
