@@ -15,7 +15,7 @@
     "dotenv": "^8.2.0",
     "express": "~4.0.0",
     "geocodio-library-node": "^1.2.1",
-    "mongoose": "~3.6.13",
+    "mongoose": "~5.7.5",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
