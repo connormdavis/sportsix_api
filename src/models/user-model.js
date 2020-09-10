@@ -94,7 +94,6 @@ User.findByEmail = (email, result) => {
 };
 
 
-
 // find all users
 User.getAll = (result) => {
   sql.query("SELECT * FROM Users", (err, res) => {

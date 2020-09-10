@@ -6,3 +6,6 @@ dist
 *.xml
 *.iml
 node_modules
+
+# For public display on website 
+db-config.js

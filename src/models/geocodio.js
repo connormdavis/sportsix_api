@@ -4,7 +4,7 @@ const config = {
   api_key: process.env.GEOCODIO_API,
 }
 
-const geo = new Geocodio('989c95e8aaff7d1e0f3980a9183c593159d0dce');
+const geo = new Geocodio(config.api_key);
 
 /*
   Address manipulation methods
